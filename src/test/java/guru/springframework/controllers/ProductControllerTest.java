@@ -52,7 +52,6 @@ public class ProductControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("product/list"))
                 .andExpect(model().attribute("products", hasSize(2)));
-
     }
 
     @Test

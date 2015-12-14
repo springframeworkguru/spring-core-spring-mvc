@@ -17,7 +17,7 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(JpaIntegrationConfig.class)
 @ActiveProfiles("jpadao")
-public class ProductServiceJapDaoImplTest {
+public class ProductServiceJpaDaoImplTest {
 
     private ProductService productService;
 

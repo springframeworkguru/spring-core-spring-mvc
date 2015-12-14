@@ -1,6 +1,6 @@
 package guru.springframework.services;
 
-import guru.springframework.domain.Product;
+import guru.springframework.domain.Customer;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +10,11 @@ import javax.persistence.PersistenceUnit;
 import java.util.List;
 
 /**
- * Created by jt on 12/9/15.
+ * Created by jt on 12/14/15.
  */
 @Service
 @Profile("jpadao")
-public class ProductServiceJpaDaoImpl implements ProductService {
-
+public class CustomerServiceJPADaoImpl implements CustomerService{
     private EntityManagerFactory emf;
 
     @PersistenceUnit
@@ -24,28 +23,28 @@ public class ProductServiceJpaDaoImpl implements ProductService {
     }
 
     @Override
-    public List<Product> listAll() {
+    public List<Customer> listAll() {
         EntityManager em = emf.createEntityManager();
 
-        return em.createQuery("from Product", Product.class).getResultList();
+        return em.createQuery("from Customer", Customer.class).getResultList();
     }
 
     @Override
-    public Product getById(Integer id) {
+    public Customer getById(Integer id) {
         EntityManager em = emf.createEntityManager();
 
-        return em.find(Product.class, id);
+        return em.find(Customer.class, id);
     }
 
     @Override
-    public Product saveOrUpdate(Product domainObject) {
+    public Customer saveOrUpdate(Customer domainObject) {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        Product savedProduct = em.merge(domainObject);
+        Customer savedCustomer = em.merge(domainObject);
         em.getTransaction().commit();
 
-        return savedProduct;
+        return savedCustomer;
     }
 
     @Override
@@ -53,7 +52,7 @@ public class ProductServiceJpaDaoImpl implements ProductService {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        em.remove(em.find(Product.class, id));
+        em.remove(em.find(Customer.class, id));
         em.getTransaction().commit();
     }
 }

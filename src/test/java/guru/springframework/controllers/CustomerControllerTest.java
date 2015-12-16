@@ -1,5 +1,6 @@
 package guru.springframework.controllers;
 
+import guru.springframework.domain.Address;
 import guru.springframework.domain.Customer;
 import guru.springframework.services.CustomerService;
 import org.junit.Before;
@@ -104,11 +105,12 @@ public class CustomerControllerTest {
         returnCustomer.setId(id);
         returnCustomer.setFirstName(firstName);
         returnCustomer.setLastName(lastName);
-        returnCustomer.setAddressLine1(addressLine1);
-        returnCustomer.setAddressLine2(addressLine2);
-        returnCustomer.setCity(city);
-        returnCustomer.setState(state);
-        returnCustomer.setZipCode(zipCode);
+        returnCustomer.setBillingAddress(new Address());
+        returnCustomer.getBillingAddress().setAddressLine1(addressLine1);
+        returnCustomer.getBillingAddress().setAddressLine2(addressLine2);
+        returnCustomer.getBillingAddress().setCity(city);
+        returnCustomer.getBillingAddress().setState(state);
+        returnCustomer.getBillingAddress().setZipCode(zipCode);
         returnCustomer.setEmail(email);
         returnCustomer.setPhoneNumber(phoneNumber);
 
@@ -146,11 +148,11 @@ public class CustomerControllerTest {
         assertEquals(id, boundCustomer.getId());
         assertEquals(firstName, boundCustomer.getFirstName());
         assertEquals(lastName, boundCustomer.getLastName());
-        assertEquals(addressLine1, boundCustomer.getAddressLine1());
-        assertEquals(addressLine2, boundCustomer.getAddressLine2());
-        assertEquals(city, boundCustomer.getCity());
-        assertEquals(state, boundCustomer.getState());
-        assertEquals(zipCode, boundCustomer.getZipCode());
+        assertEquals(addressLine1, boundCustomer.getBillingAddress().getAddressLine1());
+        assertEquals(addressLine2, boundCustomer.getBillingAddress().getAddressLine2());
+        assertEquals(city, boundCustomer.getBillingAddress().getCity());
+        assertEquals(state, boundCustomer.getBillingAddress().getState());
+        assertEquals(zipCode, boundCustomer.getBillingAddress().getZipCode());
         assertEquals(email, boundCustomer.getEmail());
         assertEquals(phoneNumber, boundCustomer.getPhoneNumber());
 

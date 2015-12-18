@@ -11,6 +11,7 @@ import java.util.List;
  * Created by jt on 12/16/15.
  */
 @Entity
+@Table(name = "ORDER_HEADER")
 public class Order extends AbstractDomainClass {
 
     @OneToOne

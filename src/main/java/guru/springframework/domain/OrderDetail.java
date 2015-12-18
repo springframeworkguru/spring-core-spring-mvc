@@ -5,25 +5,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
- * Created by jt on 12/15/15.
+ * Created by jt on 12/16/15.
  */
 @Entity
-public class CartDetail extends AbstractDomainClass {
+public class OrderDetail extends AbstractDomainClass {
 
     @ManyToOne
-    private Cart cart;
+    private Order order;
 
     @OneToOne
     private Product product;
 
     private Integer quantity;
 
-    public Cart getCart() {
-        return cart;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Product getProduct() {

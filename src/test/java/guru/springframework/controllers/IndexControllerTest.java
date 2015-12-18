@@ -29,7 +29,7 @@ public class IndexControllerTest {
     public void testIndex() throws Exception{
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("indexdd"));
+                .andExpect(view().name("index"));
     }
 
 }

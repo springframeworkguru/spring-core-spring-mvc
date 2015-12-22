@@ -12,7 +12,7 @@ import java.util.List;
  * Created by jt on 12/9/15.
  */
 @Service
-@Profile("jpadao-dontuse")
+@Profile("jpadao")
 public class ProductServiceJpaDaoImpl extends AbstractJpaDaoService implements ProductService {
 
     @Override

@@ -22,7 +22,7 @@
         <form class="form-horizontal" th:object="${customerForm}" th:action="@{/customer}" method="post">
 
             <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-                <p>Please Correct values in error below:</p>
+                <p th:text="#{form.hasErrors}">Error Message</p>
             </div>
 
             <input type="hidden" th:field="*{userId}"/>

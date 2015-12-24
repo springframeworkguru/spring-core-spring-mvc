@@ -43,16 +43,28 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" th:class="${#fields.hasErrors('passwordText')} ? 'form-group has-error' : 'form-group'">
                 <label class="col-sm-2 control-label">Password:</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" th:field="*{passwordText}"/>
+                    <input type="password" class="form-control" th:field="*{passwordText}" th:errorclass="has-error"/>
+
+                    <span class="help-block">
+                       <ul>
+                           <li th:each="err : ${#fields.errors('passwordText')}" th:text="${err}" />
+                       </ul>
+                    </span>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" th:class="${#fields.hasErrors('passwordTextConf')} ? 'form-group has-error' : 'form-group'">
                 <label class="col-sm-2 control-label">Password Conf:</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" th:field="*{passwordTextConf}"/>
+                    <input type="password" class="form-control" th:field="*{passwordTextConf}" th:errorclass="has-error"/>
+
+                    <span class="help-block">
+                       <ul>
+                           <li th:each="err : ${#fields.errors('passwordTextConf')}" th:text="${err}" />
+                       </ul>
+                    </span>
                 </div>
             </div>
             <div class="form-group">

@@ -15,7 +15,7 @@ public class CustomerForm {
     private Integer customerVersion;
 
     @NotEmpty
-    @Size(min = 2)
+    @Size(min = 2, max = 75)
     private String userName;
     private String passwordText;
     private String passwordTextConf;

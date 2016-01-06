@@ -18,17 +18,20 @@ public class UserToUserDetails implements Converter<User, UserDetails> {
     @Override
     public UserDetails convert(User user) {
         UserDetailsImpl userDetails = new UserDetailsImpl();
-        userDetails.setUsername(user.getUsername());
-        userDetails.setPassword(user.getEncryptedPassword());
-        userDetails.setEnabled(user.getEnabled());
 
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        if (user != null) {
+            userDetails.setUsername(user.getUsername());
+            userDetails.setPassword(user.getEncryptedPassword());
+            userDetails.setEnabled(user.getEnabled());
 
-        user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getRole()));
-        });
+            Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        userDetails.setAuthorities(authorities);
+            user.getRoles().forEach(role -> {
+                authorities.add(new SimpleGrantedAuthority(role.getRole()));
+            });
+
+            userDetails.setAuthorities(authorities);
+        }
 
         return userDetails;
     }

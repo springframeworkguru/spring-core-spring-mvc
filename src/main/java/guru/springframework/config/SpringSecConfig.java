@@ -51,6 +51,15 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/").permitAll();
+        http.csrf().ignoringAntMatchers("/h2-console").disable()
+                .authorizeRequests().antMatchers("/**/favicon.ico") .permitAll()
+                .and().authorizeRequests().antMatchers("/product/**").permitAll()
+                .and().authorizeRequests().antMatchers("/webjars/**").permitAll()
+                .and().authorizeRequests().antMatchers("/static/css").permitAll()
+                .and().authorizeRequests().antMatchers("/js").permitAll()
+                .and().formLogin().loginPage("/login").permitAll()
+                .and().authorizeRequests().antMatchers("/customer/**").authenticated()
+                .and().authorizeRequests().antMatchers("/user/**").authenticated()
+                .and().exceptionHandling().accessDeniedPage("/access_denied");
     }
 }

@@ -36,6 +36,5 @@ public class LoginServiceImpl implements LoginService {
                 userService.saveOrUpdate(user);
             }
         });
-
     }
 }

@@ -35,7 +35,7 @@ public class CustomerServiceJpaDaoImplTest {
 
     }
 
-    @Test
+    @Test(expected= javax.persistence.RollbackException.class)
     public void testSaveWithUser() {
 
         Customer customer = new Customer();

@@ -5,6 +5,7 @@ import guru.springframework.converters.ProductFormToProduct;
 import guru.springframework.converters.ProductToProductForm;
 import guru.springframework.domain.Product;
 import guru.springframework.services.ProductService;
+import guru.springframework.services.SendTextMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class ProductServiceJpaDaoImpl extends AbstractJpaDaoService implements P
 
     private ProductToProductForm productToProductForm;
     private ProductFormToProduct productFormToProduct;
+    private SendTextMessageService sendTextMessageService;
 
     @Autowired
     public void setProductToProductForm(ProductToProductForm productToProductForm) {
@@ -32,8 +34,15 @@ public class ProductServiceJpaDaoImpl extends AbstractJpaDaoService implements P
         this.productFormToProduct = productFormToProduct;
     }
 
+    @Autowired
+    public void setSendTextMessageService(SendTextMessageService sendTextMessageService) {
+        this.sendTextMessageService = sendTextMessageService;
+
+    }
+
     @Override
     public List<Product> listAll() {
+        sendTextMessageService.sendTextMessage("Listing Products");
         EntityManager em = emf.createEntityManager();
 
         return em.createQuery("from Product", Product.class).getResultList();
@@ -41,6 +50,8 @@ public class ProductServiceJpaDaoImpl extends AbstractJpaDaoService implements P
 
     @Override
     public Product getById(Integer id) {
+        sendTextMessageService.sendTextMessage("Requested Product ID: " + id);
+
         EntityManager em = emf.createEntityManager();
 
         return em.find(Product.class, id);

@@ -39,7 +39,21 @@ public class CustomerController {
 
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
-        model.addAttribute("customer", customerService.getById(id));
+
+        Customer customer = customerService.getById(id);
+
+        CustomerForm customerForm = new CustomerForm();
+
+        customerForm.setCustomerId(customer.getId());
+        customerForm.setCustomerVersion(customer.getVersion());
+        customerForm.setEmail(customer.getEmail());
+        customerForm.setFirstName(customer.getFirstName());
+        customerForm.setLastName(customer.getLastName());
+        customerForm.setPhoneNumber(customer.getPhoneNumber());
+        customerForm.setUserId(customer.getUser().getId());
+        customerForm.setUserName(customer.getUser().getUsername());
+        customerForm.setUserVersion(customer.getUser().getVersion());
+        model.addAttribute("customer", customerForm);
         return "customer/customerform";
     }
 

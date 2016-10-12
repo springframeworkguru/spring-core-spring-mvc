@@ -2,7 +2,6 @@ package guru.springframework.services.jpaservices;
 
 import guru.springframework.commands.ProductForm;
 import guru.springframework.converters.ProductFormToProduct;
-import guru.springframework.converters.ProductToProductForm;
 import guru.springframework.domain.Product;
 import guru.springframework.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +18,7 @@ import java.util.List;
 @Profile("jpadao")
 public class ProductServiceJpaDaoImpl extends AbstractJpaDaoService implements ProductService {
 
-    private ProductToProductForm productToProductForm;
     private ProductFormToProduct productFormToProduct;
-
-    @Autowired
-    public void setProductToProductForm(ProductToProductForm productToProductForm) {
-        this.productToProductForm = productToProductForm;
-    }
 
     @Autowired
     public void setProductFormToProduct(ProductFormToProduct productFormToProduct) {
@@ -58,20 +51,8 @@ public class ProductServiceJpaDaoImpl extends AbstractJpaDaoService implements P
     }
 
     @Override
-    public ProductForm saveOrUpdate(ProductForm productForm) {
-
-        if (productForm.getId() != null) { //existing product
-            Product productToUpdate = this.getById(productForm.getId());
-
-            productToUpdate.setVersion(productForm.getVersion());
-            productToUpdate.setDescription(productForm.getDescription());
-            productToUpdate.setPrice(productForm.getPrice());
-            productToUpdate.setImageUrl(productForm.getImageUrl());
-
-            return productToProductForm.convert(this.saveOrUpdate(productToUpdate));
-        } else { // new product
-            return productToProductForm.convert(this.saveOrUpdate(productFormToProduct.convert(productForm)));
-        }
+    public Product saveOrUpdateProductForm(ProductForm productForm) {
+        return saveOrUpdate(productFormToProduct.convert(productForm));
     }
 
     @Override

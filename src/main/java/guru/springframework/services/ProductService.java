@@ -8,6 +8,6 @@ import guru.springframework.domain.Product;
  */
 public interface ProductService extends CRUDService<Product> {
 
-    ProductForm saveOrUpdate(ProductForm productForm);
+    Product saveOrUpdateProductForm(ProductForm productForm);
 
 }

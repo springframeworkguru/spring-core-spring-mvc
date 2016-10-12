@@ -2,7 +2,6 @@ package guru.springframework.services.reposervices;
 
 import guru.springframework.commands.ProductForm;
 import guru.springframework.converters.ProductFormToProduct;
-import guru.springframework.converters.ProductToProductForm;
 import guru.springframework.domain.Product;
 import guru.springframework.repositories.ProductRepository;
 import guru.springframework.services.ProductService;
@@ -21,25 +20,18 @@ import java.util.List;
 @Profile({"springdatajpa"})
 public class ProductServiceRepoImpl implements ProductService {
 
-    private ProductToProductForm productToProductForm;
+    private ProductRepository productRepository;
     private ProductFormToProduct productFormToProduct;
     private SendTextMessageService sendTextMessageService;
 
     @Autowired
-    public void setProductToProductForm(ProductToProductForm productToProductForm) {
-        this.productToProductForm = productToProductForm;
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @Autowired
     public void setProductFormToProduct(ProductFormToProduct productFormToProduct) {
         this.productFormToProduct = productFormToProduct;
-    }
-
-    private ProductRepository productRepository;
-
-    @Autowired
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
     }
 
     @Autowired
@@ -58,27 +50,15 @@ public class ProductServiceRepoImpl implements ProductService {
     }
 
     @Override
-    public ProductForm saveOrUpdate(ProductForm productForm) {
-
-        if (productForm.getId() != null) { //existing product
-            Product productToUpdate = this.getById(productForm.getId());
-
-            productToUpdate.setVersion(productForm.getVersion());
-            productToUpdate.setDescription(productForm.getDescription());
-            productToUpdate.setPrice(productForm.getPrice());
-            productToUpdate.setImageUrl(productForm.getImageUrl());
-
-            return productToProductForm.convert(this.saveOrUpdate(productToUpdate));
-        } else { // new product
-            return productToProductForm.convert(this.saveOrUpdate(productFormToProduct.convert(productForm)));
-        }
-    }
-
-    @Override
     public Product getById(Integer id) {
         sendTextMessageService.sendTextMessage("Requested Product ID: " + id);
 
         return productRepository.findOne(id);
+    }
+
+    @Override
+    public Product saveOrUpdateProductForm(ProductForm productForm) {
+        return saveOrUpdate(productFormToProduct.convert(productForm));
     }
 
     @Override

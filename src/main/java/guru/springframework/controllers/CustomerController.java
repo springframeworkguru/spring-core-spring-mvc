@@ -2,6 +2,7 @@ package guru.springframework.controllers;
 
 import guru.springframework.commands.CustomerForm;
 import guru.springframework.commands.validators.CustomerFormValidator;
+import guru.springframework.converters.CustomerToCustomerForm;
 import guru.springframework.domain.Customer;
 import guru.springframework.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class CustomerController {
 
     private CustomerService customerService;
     private Validator customerFormValidator;
+    private CustomerToCustomerForm customerToCustomerForm;
 
     @Autowired
     public void setCustomerService(CustomerService customerService) {
@@ -36,6 +38,11 @@ public class CustomerController {
     @Qualifier("customerFormValidator")
     public void setCustomerFormValidator(CustomerFormValidator customerFormValidator) {
         this.customerFormValidator = customerFormValidator;
+    }
+
+    @Autowired
+    public void setCustomerToCustomerForm(CustomerToCustomerForm customerToCustomerForm) {
+        this.customerToCustomerForm = customerToCustomerForm;
     }
 
     @RequestMapping({"/list", "/"})
@@ -52,7 +59,10 @@ public class CustomerController {
 
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
-        model.addAttribute("customerForm", customerService.getById(id));
+
+        Customer customer = customerService.getById(id);
+
+        model.addAttribute("customerForm", customerToCustomerForm.convert(customer));
         return "customer/customerform";
     }
 

@@ -1,6 +1,7 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.ProductForm;
+import guru.springframework.converters.ProductToProductForm;
 import guru.springframework.domain.Product;
 import guru.springframework.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,13 @@ public class ProductController {
 
     private ProductService productService;
 
+    private ProductToProductForm productToProductForm;
+
+    @Autowired
+    public void setProductToProductForm(ProductToProductForm productToProductForm) {
+        this.productToProductForm = productToProductForm;
+    }
+
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
@@ -40,25 +48,28 @@ public class ProductController {
 
     @RequestMapping("product/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
-        model.addAttribute("productForm", productService.getById(id));
+        Product product = productService.getById(id);
+        ProductForm productForm = productToProductForm.convert(product);
+
+        model.addAttribute("productForm", productForm);
         return "product/productform";
     }
 
     @RequestMapping("/product/new")
     public String newProduct(Model model){
-        model.addAttribute("productForm", new Product());
+        model.addAttribute("productForm", new ProductForm());
         return "product/productform";
     }
 
     @RequestMapping(value = "/product", method = RequestMethod.POST)
     public String saveOrUpdateProduct(@Valid ProductForm productForm, BindingResult bindingResult){
 
-
         if(bindingResult.hasErrors()){
             return "product/productform";
         }
 
-        ProductForm savedProduct = productService.saveOrUpdate(productForm);
+        Product savedProduct = productService.saveOrUpdateProductForm(productForm);
+
         return "redirect:/product/show/" + savedProduct.getId();
     }
 

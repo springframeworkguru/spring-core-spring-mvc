@@ -34,13 +34,6 @@ public class ProductServiceRepoImpl implements ProductService {
         this.productFormToProduct = productFormToProduct;
     }
 
-    private ProductRepository productRepository;
-
-    @Autowired
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
     @Autowired
     public void setSendTextMessageService(SendTextMessageService sendTextMessageService) {
         this.sendTextMessageService = sendTextMessageService;

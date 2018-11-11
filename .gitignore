@@ -34,6 +34,8 @@
 ehthumbs.db
 Thumbs.db
 
+.settings
+.vscode
 .project
 .classpath
 .idea
